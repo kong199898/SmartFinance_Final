@@ -2,10 +2,6 @@ import SwiftUI
 import Foundation
 
 extension Date {
-    func LastSixMonth() -> Date? {
-        return Calendar.current.date(byAdding: .month, value: -6, to: self)
-    }
-    
     func LastSevenDay() -> Date? {
         return Calendar.current.date(byAdding: .day, value: -7, to: self)
     }
@@ -17,7 +13,7 @@ extension Date {
 
 extension UIColor {
     convenience init(hex: String) {
-        var hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+        var hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespaces).uppercased()
         if hexString.hasPrefix("#") {
             hexString = String(hexString.dropFirst())
         }

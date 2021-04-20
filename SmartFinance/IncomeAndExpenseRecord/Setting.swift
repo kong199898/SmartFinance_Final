@@ -18,7 +18,7 @@ struct ExpenseSettingsView: View {
                         Button(action: { showCurrencySetting = true }, label: {
                             HStack {
                                 Spacer()
-                                TextView(text: "Currency - \(SettingModelView.SettingCurrency)", type: .button).foregroundColor(Color("PrimaryText"))
+                                MyText(text: "Currency - \(SettingModelView.SettingCurrency)", type: .button).foregroundColor(Color("PrimaryText"))
                                 Spacer()
                             }
                         })
@@ -32,17 +32,17 @@ struct ExpenseSettingsView: View {
                                 ActionSheet.Button.default(Text(curr)) { SettingModelView.saveCurrency(currency: curr) }
                             }
                             buttons.append(.cancel())
-                            return ActionSheet(title: Text("Please select a currency"), buttons: buttons)
+                            return ActionSheet(title: Text("Select a currency"), buttons: buttons)
                         }
                         Spacer()
                         HStack {
                             Spacer()
                             Button(action: { self.Mode.wrappedValue.dismiss() }, label: {
-                                Image("confirm_icon").resizable().frame(width: 32.0, height: 32.0)
-                            }).padding().background(Color("Main")).cornerRadius(35)
+                                Image("confirm_icon").resizable().frame(width: 30, height: 30)
+                            }).padding().background(Color("Main")).cornerRadius(30)
                         }
                     }
-                    .padding(.horizontal, 8).padding(.top, 1)
+                    .padding(.horizontal, 6).padding(.top, 2)
                 }.edgesIgnoringSafeArea(.top)
             }
             .navigationBarHidden(showNavigationBar)

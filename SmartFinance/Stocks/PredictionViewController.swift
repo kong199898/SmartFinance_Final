@@ -7,8 +7,7 @@ import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
 class PredictionViewController: UIViewController {
     
-    let domain = "http://127.0.0.1:5000/"
-    //https://smartfinance-cityu.herokuapp.com/
+    let domain = "https://smartfinance-cityu.herokuapp.com/"
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     

@@ -3,8 +3,8 @@ import UIKit
 import CoreData
 
 struct AddExpenseView: View {
-    @State private var toBeDeleted = false
-    @State var showActionSheet = false
+    @State private var toBeDeleted:Bool = false
+    @State var showActionSheet:Bool = false
     @StateObject var AddExpenseModelView: AddExpenseModel
     @Environment(\.presentationMode) var Mode: Binding<PresentationMode>
     @Environment(\.managedObjectContext) var ObjectContext
@@ -41,113 +41,100 @@ struct AddExpenseView: View {
                         }
                     }.alert(isPresented: $toBeDeleted,
                             content: {
-                                Alert(title: Text("SmartFinance"), message: Text("Are you going to delete this transaction?"),
-                                    primaryButton: .destructive(Text("Delete")) {
-                                        AddExpenseModelView.DeleteTransRecord(managedObjectContext: ObjectContext)
+                                Alert(title: Text("SmartFinance"), message: Text("This transaction is going to be deleted."),
+                                    primaryButton: .destructive(Text("Confirm")) {
+                                        AddExpenseModelView.DeleteRecord(obj: ObjectContext)
                                     }, secondaryButton: Alert.Button.cancel(Text("Cancel"), action: { toBeDeleted = false })
                                 )
                             })
                     
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 12) {
+                    ScrollView(showsIndicators: true) {
+                        VStack(spacing: 10) {
                             DropdownButton(showDropDown: $AddExpenseModelView.ShowType, showText: $AddExpenseModelView.TypeExpense,
                                            item: DropdownType, color: Color("PrimaryText"),
-                                           bgcolor: Color("Secondary"), radius: 4, btnHeight: 50) { key in
-                                let selectedObj = DropdownType.filter({ $0.item == key }).first
-                                if let object = selectedObj {
-                                    AddExpenseModelView.TypeExpense = object.value
+                                           bgcolor: Color("Secondary"), radius: 3, btnHeight: 48) { key in
+                                var selected = DropdownType.filter({ $0.item == key }).first
+                                if selected != nil{
                                     AddExpenseModelView.SelectType = key
+                                    AddExpenseModelView.TypeExpense = selected!.value
                                 }
                                 AddExpenseModelView.ShowType = false
                             }
                             DropdownButton(showDropDown: $AddExpenseModelView.ShowTag, showText: $AddExpenseModelView.Tag,
                                            item: DropdownTag, color: Color("PrimaryText"),
-                                           bgcolor: Color("Secondary"), radius: 4, btnHeight: 50) { key in
-                                let selectedObj = DropdownTag.filter({ $0.item == key }).first
-                                if let object = selectedObj {
-                                    AddExpenseModelView.Tag = object.value
+                                           bgcolor: Color("Secondary"), radius: 3, btnHeight: 48) { key in
+                                var selected = DropdownTag.filter({ $0.item == key }).first
+                                if selected != nil {
                                     AddExpenseModelView.SelectTag = key
+                                    AddExpenseModelView.Tag = selected!.value
                                 }
                                 AddExpenseModelView.ShowTag = false
                             }
                             TextField("Title", text: $AddExpenseModelView.Title)
                                 .accentColor(Color("PrimaryText"))
-                                .frame(height: 50).padding(.leading, 16)
+                                .frame(height: 48).padding(.leading, 15)
                                 .background(Color("Secondary"))
-                                .cornerRadius(4)
+                                .cornerRadius(3)
                                 .foregroundColor(.white)
                             
                             TextField("Amount", text: $AddExpenseModelView.Amount)
                                 .accentColor(Color("PrimaryText"))
-                                .frame(height: 50).padding(.leading, 16)
+                                .frame(height: 48).padding(.leading, 15)
                                 .background(Color("Secondary"))
-                                .cornerRadius(4).keyboardType(.decimalPad)
+                                .cornerRadius(3).keyboardType(.decimalPad)
                                 .foregroundColor(.white)
                             HStack {
                                 DatePicker("PickerView", selection: $AddExpenseModelView.Occurrence,
-                                           displayedComponents: [.date, .hourAndMinute]).labelsHidden().padding(.leading, 16)
+                                           displayedComponents: [.date, .hourAndMinute]).labelsHidden().padding(.leading, 15)
                                 Spacer()
                             }
-                            .frame(height: 50).frame(maxWidth: .infinity)
+                            .frame(height: 48).frame(maxWidth: .infinity)
                             .accentColor(Color("PrimaryText"))
-                            .background(Color("Secondary")).cornerRadius(4)
-                            
-                            TextField("Note", text: $AddExpenseModelView.Note)
-                                .accentColor(Color("PrimaryText"))
-                                .frame(height: 50).padding(.leading, 16)
-                                .background(Color("Secondary"))
-                                .cornerRadius(4)
-                                .foregroundColor(.white)
+                            .background(Color("Secondary")).cornerRadius(3)
                             
                             Button(action: { AddExpenseModelView.AttachTransImage() }, label: {
-                                HStack {
-                                    Image(systemName: "paperclip")
-                                        .font(.system(size: 18.0, weight: .bold))
-                                        .foregroundColor(Color("SecondaryText"))
-                                        .padding(.leading, 16)
-                                    TextView(text: "Attach an image", type: .button).foregroundColor(Color("SecondaryText"))
-                                    Spacer()
-                                }
+                                MyText(text: "Attach an image", type: .button).foregroundColor(Color("SecondaryText"))
                             })
-                            .frame(height: 50).frame(maxWidth: .infinity)
+                            .frame(height: 48).frame(maxWidth: .infinity)
                             .background(Color("Secondary"))
-                            .cornerRadius(4)
+                            .cornerRadius(3)
                             .actionSheet(isPresented: $showActionSheet) {
-                                ActionSheet(title: Text("Do you want to remove the attachment?"), buttons: [
-                                    .default(Text("Remove")) { AddExpenseModelView.RemoveTransImage() },
+                                ActionSheet(title: Text("This attachment is going to be removed."), buttons: [
+                                    .destructive(Text("Confirm")) { AddExpenseModelView.RemoveTransImage() },
                                     .cancel()
                                 ])
                             }
-                            if let image = AddExpenseModelView.AttachImage {
+                            if AddExpenseModelView.AttachImage != nil {
+                                let image = AddExpenseModelView.AttachImage
                                 Button(action: { showActionSheet = true }, label: {
-                                    Image(uiImage: image)
+                                    Image(uiImage: image!)
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(height: 250).frame(maxWidth: .infinity)
+                                        .frame(height: 245).frame(maxWidth: .infinity)
                                         .background(Color("Secondary"))
-                                        .cornerRadius(4)
+                                        .cornerRadius(3)
                                 })
                             }
-                            Spacer().frame(height: 150)
+                            Spacer().frame(height: 145)
                             Spacer()
                         }
-                        .frame(maxWidth: .infinity).padding(.horizontal, 8)
+                        .frame(maxWidth: .infinity).padding(.horizontal, 7)
                         .alert(isPresented: $AddExpenseModelView.ShowAlertMessage,
-                               content: { Alert(title: Text("SmartFinance"), message: Text(AddExpenseModelView.Alert), dismissButton: .default(Text("OK"))) })
+                               content: { Alert(title: Text("SmartFinance"), message: Text(AddExpenseModelView.Alert), dismissButton: .default(Text("Close"))) })
                     }
                 }.edgesIgnoringSafeArea(.top)
                 VStack {
                     Spacer()
                     VStack {
-                        Button(action: { AddExpenseModelView.SaveTransRecord(managedObjectContext: ObjectContext) }, label: {
+                        Button(action: { AddExpenseModelView.SaveRecord(obj: ObjectContext) }, label: {
                             HStack {
                                 Spacer()
-                                TextView(text: AddExpenseModelView.getTitleText(), type: .button).foregroundColor(.white)
+                                MyText(text: AddExpenseModelView.getTitleText(), type: .button).foregroundColor(.white)
                                 Spacer()
                             }
                         })
-                        .padding(.vertical, 12).background(Color("Main")).cornerRadius(8)
-                    }.padding(.bottom, 16).padding(.horizontal, 8)
+                        .padding(.vertical, 10).background(Color("Main")).cornerRadius(7)
+                    }.padding(.bottom, 15).padding(.horizontal, 7)
                 }
                 
             }
@@ -169,7 +156,6 @@ class AddExpenseModel: ObservableObject {
     @Published var Title:String = ""
     @Published var Amount:String = ""
     @Published var Occurrence = Date()
-    @Published var Note:String = ""
     @Published var TypeExpense:String = "Income"
     @Published var Tag = getTransactionTitle(Tag: "others")
     @Published var ShowType:Bool = false
@@ -184,27 +170,60 @@ class AddExpenseModel: ObservableObject {
     
     init(Object: ExpenseCD? = nil) {
         ExpenseDB = Object
-        Title = Object?.title ?? ""
-        if let expenseObj = Object {
-            Amount = String(expenseObj.amount)
-            TypeExpense = expenseObj.type == "income" ? "Income" : "Expense"
-        } else {
+        
+        if Object?.title != nil {
+            Title = Object!.title!
+        }else{
+            Title = ""
+        }
+        
+        if Object != nil {
+            Amount = String(Object!.amount)
+            TypeExpense = Object!.type == "income" ? "Income" : "Expense"
+        }else {
             Amount = ""
             TypeExpense = "Income"
         }
-        Occurrence = Object?.occuredOn ?? Date()
-        Note = Object?.note ?? ""
-        Tag = getTransactionTitle(Tag: Object?.tag ?? "others")
-        SelectType = Object?.type ?? "income"
-        SelectTag = Object?.tag ?? "others"
         
-        if let data = Object?.imageAttached {
-            AttachImage = UIImage(data: data)
+        if Object?.occuredOn != nil {
+            Occurrence = Object!.occuredOn!
+        }else{
+            Occurrence = Date()
+        }
+        
+        if Object?.tag != nil {
+            Tag = getTransactionTitle(Tag: Object!.tag!)
+        }else{
+            Tag = "others"
+        }
+        
+        if Object?.type != nil {
+            SelectType = Object!.type!
+        }else{
+            SelectType = "income"
+        }
+        
+        if Object?.tag != nil {
+            SelectTag = Object!.tag!
+        }else{
+            SelectTag = "others"
+        }
+        
+        if Object?.imageAttached != nil {
+            AttachImage = UIImage(data: Object!.imageAttached!)
         }
         
         Attachment.share.imagePicked = { [weak self] image in
             self?.UpdateImage = true
             self?.AttachImage = image
+        }
+    }
+    
+    func getTitleText() -> String {
+        if ExpenseDB == nil{
+            return "ADD TRANSACTION"
+        }else{
+            return "EDIT TRANSACTION"
         }
     }
     
@@ -216,18 +235,10 @@ class AddExpenseModel: ObservableObject {
         AttachImage = nil
     }
     
-    func getTitleText() -> String {
-        if ExpenseDB == nil{
-            return "ADD TRANSACTION"
-        }else{
-            return "EDIT TRANSACTION"
-        }
-    }
-    
-    func SaveTransRecord(managedObjectContext: NSManagedObjectContext) {
+    func SaveRecord(obj: NSManagedObjectContext) {
         let expense: ExpenseCD
-        let titleString = Title.trimmingCharacters(in: .whitespacesAndNewlines)
-        let amountString = Amount.trimmingCharacters(in: .whitespacesAndNewlines)
+        let amountString = Amount
+        let titleString = Title
         
         if amountString.isEmpty {
             Alert = "Please enter an amount"; ShowAlertMessage = true
@@ -243,8 +254,7 @@ class AddExpenseModel: ObservableObject {
         }
         
         if ExpenseDB == nil {
-            expense = ExpenseCD(context: managedObjectContext)
-            expense.createdAt = Date()
+            expense = ExpenseCD(context: obj)
             if let image = AttachImage {
                 expense.imageAttached = image.jpegData(compressionQuality: 1.0)
             }
@@ -262,15 +272,13 @@ class AddExpenseModel: ObservableObject {
                 expense.imageAttached = nil
             }
         }
-        expense.updatedAt = Date()
         expense.type = SelectType
         expense.title = titleString
         expense.tag = SelectTag
         expense.occuredOn = Occurrence
-        expense.note = Note
         expense.amount = amount
         do {
-            try managedObjectContext.save()
+            try obj.save()
             ClosePresentation = true
         }
         catch {
@@ -278,11 +286,11 @@ class AddExpenseModel: ObservableObject {
         }
     }
     
-    func DeleteTransRecord(managedObjectContext: NSManagedObjectContext) {
+    func DeleteRecord(obj: NSManagedObjectContext) {
         guard let expenseObj = ExpenseDB else { return }
-        managedObjectContext.delete(expenseObj)
+        obj.delete(expenseObj)
         do {
-            try managedObjectContext.save(); ClosePresentation = true
+            try obj.save(); ClosePresentation = true
         }
         catch {
             Alert = "error when deleting transaction"; ShowAlertMessage = true

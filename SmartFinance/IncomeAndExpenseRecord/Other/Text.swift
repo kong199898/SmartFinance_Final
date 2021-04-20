@@ -1,9 +1,8 @@
 import SwiftUI
 import Lottie
 
-enum TextView_Type {
+enum MyTextType {
     case h5
-    case h6
     case subtitle_1
     case body_1
     case body_2
@@ -48,15 +47,13 @@ struct LottieView_Previews: PreviewProvider {
     }
 }
 
-struct TextView: View {
+struct MyText: View {
     var text: String
-    var type: TextView_Type
+    var type: MyTextType
     
     var body: some View {
         if type == .h5{
             return Text(text).tracking(0).lineLimit(0)
-        }else if type == .h6{
-            return Text(text).tracking(0.15).lineLimit(0)
         }else if type == .subtitle_1{
             return Text(text).tracking(0.15).lineLimit(0)
         }else if type == .body_1{

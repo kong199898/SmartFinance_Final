@@ -40,7 +40,7 @@ struct Toolbar: View {
                 }
             }
             HStack {
-                TextView(text: title, type: .h5).foregroundColor(Color("PrimaryText"))
+                MyText(text: title, type: .h5).foregroundColor(Color("PrimaryText"))
             }
         }.padding(14).padding(.horizontal, 6).padding(.top, 28).background(Color("Secondary"))
     }

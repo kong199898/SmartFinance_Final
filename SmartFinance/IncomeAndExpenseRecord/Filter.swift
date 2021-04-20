@@ -16,7 +16,11 @@ struct ExpenseFilterView: View {
     
     func getTitle() -> String {
         if let type = isTypeIncome {
-            return type ? "Income" : "Expense"
+            if type {
+                return " Income"
+            }else{
+                return "Expense"
+            }
         } else if let tag = category {
             return getTransactionTitle(Tag: tag)
         }
@@ -32,26 +36,28 @@ struct ExpenseFilterView: View {
                         button1Method: { showActionSheet = true }
                         .actionSheet(isPresented: $showActionSheet) {
                             ActionSheet(title: Text("Select a filter"), buttons: [
-                                    .default(Text("Overall")) { ExpFilter = .all },
                                     .default(Text("Last week")) { ExpFilter = .week },
                                     .default(Text("Last month")) { ExpFilter = .month },
+                                    .default(Text("Overall")) { ExpFilter = .all },
                                     .cancel()
                             ])
                         }
                     ScrollView(showsIndicators: false) {
-                        if let type = isTypeIncome {
-                            ExpenseFilterChart(isIncome: type, filter: ExpFilter).frame(width: 350, height: 350)
-                            ExpenseFilterList(isIncome: type, filter: ExpFilter)
+                        if isTypeIncome != nil {
+                            let type = isTypeIncome
+                            ExpenseFilterChart(isIncome: type!, filter: ExpFilter).frame(width: 345, height: 345)
+                            ExpenseFilterList(isIncome: type!, filter: ExpFilter)
                         }
-                        if let tag = category {
-                            HStack(spacing: 8) {
-                                ExpenseModel(isExpense: false, filter: ExpFilter, categTag: tag)
-                                ExpenseModel(isExpense: true, filter: ExpFilter, categTag: tag)
+                        if category != nil {
+                            let tag = category
+                            HStack(spacing: 9) {
+                                ExpenseModel(isExpense: false, filter: ExpFilter, categTag: tag!)
+                                ExpenseModel(isExpense: true, filter: ExpFilter, categTag: tag!)
                             }.frame(maxWidth: .infinity)
                             ExpenseFilterList(filter: ExpFilter, tag: tag)
                         }
-                        Spacer().frame(height: 150)
-                    }.padding(.horizontal, 8).padding(.top, 0)
+                        Spacer().frame(height: 145)
+                    }.padding(.horizontal, 9).padding(.top, 0)
                     Spacer()
                 }.edgesIgnoringSafeArea(.all)
             }
@@ -73,8 +79,10 @@ struct ExpenseFilterChart: View {
     
     private func getValue() -> String {
         var value = Double(0)
-        for i in ExpFetchedResult { value += i.amount }
-        return "\(String(format: "%.2f", value))"
+        for i in ExpFetchedResult {
+            value = value + i.amount
+        }
+        return "\(String(format: "%.1f", value))"
     }
     
     private func getChartModel() -> [ChartModel] {
@@ -94,26 +102,23 @@ struct ExpenseFilterChart: View {
     
     init(isIncome: Bool, filter: ExpenseFilter) {
         isTypeIncome = isIncome
-        ExpType = isIncome ? "income" : "expense"
-        let sortDescriptor = NSSortDescriptor(key: "occuredOn", ascending: false)
+        if isIncome {
+            ExpType = "income"
+        }else {
+            ExpType = "expense"
+        }
         
         if filter != .all {
             var start: NSDate!
-            let end: NSDate = NSDate()
             if filter == .month {
                 start = Date().LastThirtyDay()! as NSDate
             }
             else if filter == .week {
                 start = Date().LastSevenDay()! as NSDate
             }
-            else {
-                start = Date().LastSixMonth()! as NSDate
-            }
-            let predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", start, end, ExpType)
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [NSSortDescriptor(key: "occuredOn", ascending: false)], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", start, NSDate(), ExpType))
         } else {
-            let predicate = NSPredicate(format: "type == %@", ExpType)
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [NSSortDescriptor(key: "occuredOn", ascending: false)], predicate: NSPredicate(format: "type == %@", ExpType))
         }
     }
     
@@ -135,37 +140,32 @@ struct ExpenseFilterList: View {
         let sortDescriptor = NSSortDescriptor(key: "occuredOn", ascending: false)
         if filter != .all {
             var start: NSDate!
-            let end: NSDate = NSDate()
             if filter == .month {
                 start = Date().LastThirtyDay()! as NSDate
             }
             else if filter == .week {
                 start = Date().LastSevenDay()! as NSDate
             }
-            else {
-                start = Date().LastSixMonth()! as NSDate
-            }
-            let predicate: NSPredicate!
             if let tag = tag {
-                predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND tag == %@", start, end, tag)
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND tag == %@", start, NSDate(), tag))
             }
             else if let isIncome = isIncome {
-                predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", start, end, (isIncome ? "income" : "expense"))
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", start, NSDate(), (isIncome ? "income" : "expense")))
             }
             else {
-                predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@", start, end)
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@", start, NSDate()))
             }
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
         } else {
-            let predicate: NSPredicate!
             if let tag = tag {
-                predicate = NSPredicate(format: "tag == %@", tag)
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "tag == %@", tag))
             }
             else if let isIncome = isIncome {
-                predicate = NSPredicate(format: "type == %@", (isIncome ? "income" : "expense"))
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "type == %@", (isIncome ? "income" : "expense")))
             }
-            else { predicate = NSPredicate(format: "occuredOn <= %@", NSDate()) }
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+            else {
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn <= %@", NSDate()))
+            }
+            
         }
     }
     var body: some View {
@@ -193,11 +193,11 @@ struct Chart: UIViewRepresentable {
     
     func updateUIView(_ uiView: PieChartView, context: Context) {
         let dataSet = PieChartDataSet(entries: entries, label: label)
-        dataSet.valueFont = UIFont.init(name: "Inter-Bold", size: 18) ?? .systemFont(ofSize: 18, weight: .bold)
-        dataSet.entryLabelFont = UIFont.init(name: "Inter-Light", size: 14)
-        dataSet.colors = [UIColor(hex: "#DD222D")] + [UIColor(hex: "#F9AA07")] + [UIColor(hex: "#7220DC")] + [UIColor(hex: "#1DB0F3")] +
-                            [UIColor(hex: "#D21667")] + [UIColor(hex: "#EC5B2A")] + [UIColor(hex: "#FADFB4")] +
-                            [UIColor(hex: "#CCCF2E")] + [UIColor(hex: "#E1C10C")] + [UIColor(hex: "#716942")]
+        dataSet.valueFont = UIFont.init(name: "Inter-Bold", size: 16) ?? .systemFont(ofSize: 16, weight: .bold)
+        dataSet.entryLabelFont = UIFont.init(name: "Inter-Light", size: 12)
+        dataSet.colors = [UIColor(hex: "#F8AB10")] + [UIColor(hex: "#7321DD")] + [UIColor(hex: "#2DB1F4")] +
+                            [UIColor(hex: "#D31869")] + [UIColor(hex: "#EB5B3B")] + [UIColor(hex: "#FAB4F7")] +
+                            [UIColor(hex: "#DDCE2F")] + [UIColor(hex: "#1EA300")] + [UIColor(hex: "#606833")]
         uiView.data = PieChartData(dataSet: dataSet)
     }
 }

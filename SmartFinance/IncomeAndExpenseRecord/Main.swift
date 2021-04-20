@@ -52,73 +52,77 @@ struct ExpenseView: View {
 }
 
 struct ExpenseMain: View {
+    var showView:Bool = true
     var ExpFilter: ExpenseFilter
     var ExpFetchRequest: FetchRequest<ExpenseCD>
     var ExpFecthResult: FetchedResults<ExpenseCD> { ExpFetchRequest.wrappedValue }
     @AppStorage(Currency) var CURRENCY: String = ""
     
     init(filter: ExpenseFilter) {
-        let sortDescriptor = NSSortDescriptor(key: "occuredOn", ascending: false)
-        self.ExpFilter = filter
         if filter != .all {
-            var startDate: NSDate!
-            let endDate: NSDate = NSDate()
-            if filter == .week { startDate = Date().LastSevenDay()! as NSDate }
-            else if filter == .month { startDate = Date().LastThirtyDay()! as NSDate }
-            else { startDate = Date().LastSixMonth()! as NSDate }
-            let predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@", startDate, endDate)
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+            var start: NSDate!
+            if filter == .month {
+                start = Date().LastThirtyDay()! as NSDate
+            }
+            else if filter == .week {
+                start = Date().LastSevenDay()! as NSDate
+            }
+            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(),
+                                                      sortDescriptors: [NSSortDescriptor(key: "occuredOn", ascending: false)],
+                                                      predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@", start, NSDate()))
         } else {
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor])
+            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [NSSortDescriptor(key: "occuredOn", ascending: false)])
         }
+        self.ExpFilter = filter
     }
     
     private func getBalance() -> String {
-        var value = Double(0)
+        var value:Double = 0
         for e in ExpFecthResult {
             if e.type == "expense" {
-                value -= e.amount
+                value = value - e.amount
             }
             else if e.type == "income" {
-                value += e.amount
+                value = value + e.amount
             }
         }
-        return "\(String(format: "%.2f", value))"
+        let valueString = String(format: "%.1f", value)
+        return valueString
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        ScrollView(showsIndicators: true) {
             if !ExpFetchRequest.wrappedValue.isEmpty {
-                VStack(spacing: 16) {
-                    TextView(text: "TOTAL BALANCE", type: .overline).foregroundColor(Color("GreyText")).padding(.top, 30)
-                    TextView(text: "\(CURRENCY)\(getBalance())", type: .h5).foregroundColor(Color("PrimaryText")).padding(.bottom, 30)
+                VStack(spacing: 15) {
+                    MyText(text: "BALANCE", type: .overline).foregroundColor(Color("GreyText")).padding(.top, 25)
+                    MyText(text: "\(CURRENCY)\(getBalance())", type: .h5).foregroundColor(Color("PrimaryText")).padding(.bottom, 25)
                 }.frame(maxWidth: .infinity).background(Color("Secondary")).cornerRadius(4)
                 
-                HStack(spacing: 8) {
-                    NavigationLink(destination: LazyView(ExpenseFilterView(isIncome: true)),
-                                   label: { ExpenseModel(isExpense: false, filter: ExpFilter) })
-                    NavigationLink(destination: LazyView(ExpenseFilterView(isIncome: false)),
-                                   label: { ExpenseModel(isExpense: true, filter: ExpFilter) })
+                HStack(spacing: 7) {
+                    if showView {
+                        NavigationLink(destination: LazyView(ExpenseFilterView(isIncome: true)),
+                                       label: { ExpenseModel(isExpense: false, filter: ExpFilter) })
+                        NavigationLink(destination: LazyView(ExpenseFilterView(isIncome: false)),
+                                       label: { ExpenseModel(isExpense: true, filter: ExpFilter) })
+                    }
                 }.frame(maxWidth: .infinity)
-                
-                Spacer().frame(height: 16)
-                
+                Spacer()
                 HStack {
-                    TextView(text: "Recent Transaction", type: .subtitle_1).foregroundColor(Color("PrimaryText"))
+                    MyText(text: "Recent Transaction", type: .subtitle_1).foregroundColor(Color("PrimaryText"))
                     Spacer()
-                }.padding(4)
+                }.padding(2)
                 
-                ForEach(self.ExpFetchRequest.wrappedValue) { object in
+                ForEach(ExpFetchRequest.wrappedValue) { object in
                     NavigationLink(destination: ExpenseDetailView(ExpenseDB: object), label: { ExpenseTransaction(ExpObject: object) })
                 }
             } else {
-                LottieView(AnimateType: .cross).frame(width: 300, height: 300)
+                LottieView(AnimateType: .cross).frame(width: 290, height: 290)
                 VStack {
-                    TextView(text: "No Transaction!", type: .h6).foregroundColor(Color("PrimaryText"))
+                    MyText(text: "No Transaction!", type: .h5).foregroundColor(Color("PrimaryText"))
                 }.padding(.horizontal)
             }
-            Spacer().frame(height: 150)
-        }.padding(.horizontal, 8).padding(.top, 0)
+            Spacer()
+        }.padding(.horizontal, 6)
     }
 }
 
@@ -131,8 +135,10 @@ struct ExpenseModel: View {
     
     private func getTotalValue() -> String {
         var value = Double(0)
-        for i in ExpFecthResult { value += i.amount }
-        return "\(String(format: "%.2f", value))"
+        for i in ExpFecthResult {
+            value = value + i.amount
+        }
+        return "\(String(format: "%.1f", value))"
     }
     
     init(isExpense: Bool, filter: ExpenseFilter, categTag: String? = nil) {
@@ -145,39 +151,45 @@ struct ExpenseModel: View {
         let sortDescriptor = NSSortDescriptor(key: "occuredOn", ascending: false)
         
         if filter != .all {
-            var startDate: NSDate!
-            let endDate: NSDate = NSDate()
-            if filter == .week { startDate = Date().LastSevenDay()! as NSDate }
-            else if filter == .month { startDate = Date().LastThirtyDay()! as NSDate }
-            else { startDate = Date().LastSixMonth()! as NSDate }
-            var predicate: NSPredicate!
+            var start: NSDate!
+            if filter == .week {
+                start = Date().LastSevenDay()! as NSDate
+            }
+            else if filter == .month {
+                start = Date().LastThirtyDay()! as NSDate
+            }
             if let tag = categTag {
-                predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@ AND tag == %@", startDate, endDate, type, tag)
-            } else { predicate = NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", startDate, endDate, type) }
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@ AND tag == %@", start, NSDate(), type, tag))
+            } else {
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "occuredOn >= %@ AND occuredOn <= %@ AND type == %@", start, NSDate(), type))
+            }
         } else {
-            var predicate: NSPredicate!
             if let tag = categTag {
-                predicate = NSPredicate(format: "type == %@ AND tag == %@", type, tag)
-            } else { predicate = NSPredicate(format: "type == %@", type) }
-            ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: predicate)
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "type == %@ AND tag == %@", type, tag))
+            } else {
+                ExpFetchRequest = FetchRequest<ExpenseCD>(entity: ExpenseCD.entity(), sortDescriptors: [sortDescriptor], predicate: NSPredicate(format: "type == %@", type))
+            }
         }
     }
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
             HStack {
                 Spacer()
             }
             HStack{
-                TextView(text: isExpense ? "EXPENSE" : "INCOME", type: .overline).foregroundColor(Color("GreyText"))
+                if isExpense {
+                    MyText(text: "INCOME", type: .overline).foregroundColor(Color("GreyText"))
+                }else{
+                    MyText(text: "EXPENSE", type: .overline).foregroundColor(Color("GreyText"))
+                }
                 Spacer()
-            }.padding(.horizontal, 12)
+            }.padding(.horizontal, 10)
             HStack {
-                TextView(text: "\(CURRENCY)\(getTotalValue())", type: .h5).foregroundColor(Color("PrimaryText"))
+                MyText(text: "\(CURRENCY)\(getTotalValue())", type: .h5).foregroundColor(Color("PrimaryText"))
                 Spacer()
-            }.padding(.horizontal, 12)
-        }.padding(.bottom, 12).background(Color("Secondary")).cornerRadius(4)
+            }.padding(.horizontal, 10)
+        }.padding(.bottom, 10).background(Color("Secondary")).cornerRadius(2)
     }
 }
 
@@ -189,25 +201,34 @@ struct ExpenseTransaction: View {
         HStack {
             NavigationLink(destination: LazyView(ExpenseFilterView(Tag: ExpObject.tag)), label: {
                 Image(getTransactionIcon(Tag: ExpObject.tag ?? ""))
-                    .resizable().frame(width: 24, height: 24).padding(16)
-                    .background(Color("Primary")).cornerRadius(4)
+                    .resizable().frame(width: 25, height: 25).padding(15)
+                    .background(Color("Primary")).cornerRadius(2)
             })
             
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack {
-                    TextView(text: ExpObject.title ?? "", type: .subtitle_1).foregroundColor(Color("PrimaryText"))
+                    MyText(text: ExpObject.title ?? "", type: .subtitle_1).foregroundColor(Color("PrimaryText"))
                     Spacer()
-                    TextView(text: "\(ExpObject.type == "income" ? "+" : "-")\(CURRENCY)\(ExpObject.amount)", type: .subtitle_1)
-                        .foregroundColor(ExpObject.type == "income" ? Color(UIColor(red: 109/255, green: 205/255, blue: 149/255, alpha: 1.0)) : Color(UIColor(red: 233/255, green: 85/255, blue: 85/255, alpha: 1.0)))
+                    if ExpObject.type == "income" {
+                        MyText(text: "\("+")\(CURRENCY)\(ExpObject.amount)", type: .subtitle_1)
+                            .foregroundColor(Color(UIColor(red: 109/255, green: 205/255, blue: 149/255, alpha: 1.0)))
+                    }else{
+                        MyText(text: "\("-")\(CURRENCY)\(ExpObject.amount)", type: .subtitle_1)
+                            .foregroundColor(Color(UIColor(red: 233/255, green: 85/255, blue: 85/255, alpha: 1.0)))
+                    }
                 }
                 HStack {
-                    TextView(text: getTransactionTitle(Tag: ExpObject.tag ?? ""), type: .body_2).foregroundColor(Color("PrimaryText"))
+                    if ExpObject.tag != nil {
+                        MyText(text: getTransactionTitle(Tag: ExpObject.tag!), type: .body_2).foregroundColor(Color("PrimaryText"))
+                    }else{
+                        MyText(text: "", type: .body_2).foregroundColor(Color("PrimaryText"))
+                    }
                     Spacer()
-                    TextView(text: DateFormatter(date: ExpObject.occuredOn, format: "MMM dd, yyyy"), type: .body_2).foregroundColor(Color("PrimaryText"))
+                    MyText(text: DateFormatter(date: ExpObject.occuredOn, format: "E, dd MMMM yyyy"), type: .body_2).foregroundColor(Color("PrimaryText"))
                 }
-            }.padding(.leading, 4)
+            }.padding(.leading, 2)
             Spacer()
-        }.padding(8).background(Color("Secondary")).cornerRadius(4)
+        }.padding(6).background(Color("Secondary")).cornerRadius(2)
     }
 }
 

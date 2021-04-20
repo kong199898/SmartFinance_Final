@@ -21,41 +21,51 @@ struct ExpenseDetailView: View {
                 VStack {
                     Toolbar(title: "Details", FirstIcon: "trash_icon") { Mode.wrappedValue.dismiss() }
                          button1Method: { confirmDelete = true }
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: 24) {
-                            DetailedList(Title: "Title", Description: ExpenseDetailModelView.ExpenseObject.title ?? "")
+                    ScrollView(showsIndicators: true) {
+                        VStack(spacing: 22) {
+                            if ExpenseDetailModelView.ExpenseObject.title != nil {
+                                DetailedList(Title: "Title", Description: ExpenseDetailModelView.ExpenseObject.title!)
+                            }else {
+                                DetailedList(Title: "Title", Description: "")
+                            }
+                            
                             DetailedList(Title: "Amount", Description: "\(CURRENCY)\(ExpenseDetailModelView.ExpenseObject.amount)")
+                            
                             if ExpenseDetailModelView.ExpenseObject.type == "income"{
                                 DetailedList(Title: "Transaction type", Description: "Income")
                             }else{
                                 DetailedList(Title: "Transaction type", Description: "Expense")
                             }
-                            DetailedList(Title: "Tag", Description: getTransactionTitle(Tag: ExpenseDetailModelView.ExpenseObject.tag ?? ""))
-                            DetailedList(Title: "When", Description: DateFormatter(date: ExpenseDetailModelView.ExpenseObject.occuredOn, format: "EEEE, dd MMM hh:mm a"))
-                            if let note = ExpenseDetailModelView.ExpenseObject.note, note != "" {
-                                DetailedList(Title: "Note", Description: note)
+                            
+                            if ExpenseDetailModelView.ExpenseObject.tag != nil {
+                                DetailedList(Title: "Tag", Description: getTransactionTitle(Tag: ExpenseDetailModelView.ExpenseObject.tag!))
+                            }else{
+                                DetailedList(Title: "Tag", Description: "")
                             }
-                            if let data = ExpenseDetailModelView.ExpenseObject.imageAttached {
-                                VStack(spacing: 8) {
-                                    HStack { TextView(text: "Attachment", type: .caption).foregroundColor(Color("GreyText")); Spacer() }
-                                    Image(uiImage: UIImage(data: data)!)
+                            
+                            DetailedList(Title: "When", Description: DateFormatter(date: ExpenseDetailModelView.ExpenseObject.occuredOn, format: "EEEE, dd MMMM yyyy hh:mm a"))
+                            
+                            if ExpenseDetailModelView.ExpenseObject.imageAttached != nil {
+                                VStack(spacing: 6) {
+                                    HStack { MyText(text: "Attachment", type: .caption).foregroundColor(Color("GreyText")); Spacer() }
+                                    Image(uiImage: UIImage(data: ExpenseDetailModelView.ExpenseObject.imageAttached!)!)
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(height: 250).frame(maxWidth: .infinity)
+                                        .frame(height: 245).frame(maxWidth: .infinity)
                                         .background(Color("Secondary"))
-                                        .cornerRadius(4)
+                                        .cornerRadius(2)
                                 }
                             }
-                        }.padding(16)
-                        Spacer().frame(height: 24)
+                        }.padding(15)
+                        Spacer().frame(height: 22)
                         Spacer()
                     }
                     .alert(isPresented: $confirmDelete,
                                 content: {
-                                    Alert(title: Text("SmartFinance"), message: Text("Are you going to delete this transaction?"),
-                                        primaryButton: .destructive(Text("Delete")) {
-                                            ExpenseDetailModelView.deleteNote(Objc: ObjectContext)
-                                        }, secondaryButton: Alert.Button.cancel(Text("Cancel"), action: { confirmDelete = false })
+                                    Alert(title: Text("SmartFinance"), message: Text("This transaction is going to be deleted"),
+                                        primaryButton: Alert.Button.cancel(Text("Cancel"), action: { confirmDelete = false }), secondaryButton:.destructive(Text("Confirm")) {
+                                            ExpenseDetailModelView.deleteRecord(obj: ObjectContext)
+                                        }
                                     )
                                 })
                 }.edgesIgnoringSafeArea(.all)
@@ -64,12 +74,12 @@ struct ExpenseDetailView: View {
                     HStack {
                         Spacer()
                         NavigationLink(destination: AddExpenseView(AddExpenseModelView: AddExpenseModel(Object: ExpenseDetailModelView.ExpenseObject)), label: {
-                            Image("edit_icon").resizable().frame(width: 28.0, height: 28.0)
-                            Text("Edit").foregroundColor(.white)
+                            Text("EDIT").foregroundColor(.white)
+                            Image("edit_icon").resizable().frame(width: 25, height: 25)
                         })
-                        .padding(EdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 20))
-                        .background(Color("Main")).cornerRadius(25)
-                    }.padding(24)
+                        .padding(EdgeInsets(top: 12, leading: 14, bottom: 12, trailing: 18))
+                        .background(Color("Main")).cornerRadius(20)
+                    }.padding(20)
                 }
             }
             .navigationBarHidden(showNavigationBar)
@@ -84,9 +94,14 @@ struct DetailedList: View {
     var Title: String
     var Description: String
     var body: some View {
-        VStack(spacing: 8) {
-            HStack { TextView(text: Title, type: .caption).foregroundColor(Color("GreyText")); Spacer() }
-            HStack { TextView(text: Description, type: .body_1).foregroundColor(Color("PrimaryText")); Spacer() }
+        VStack(spacing: 6) {
+            HStack {
+                MyText(text: Title, type: .caption).foregroundColor(Color("GreyText"))
+                Spacer()
+            }
+            HStack { MyText(text: Description, type: .body_1).foregroundColor(Color("PrimaryText"))
+                Spacer()
+            }
         }
     }
 }
@@ -102,13 +117,13 @@ class ExpenseDetailModel: ObservableObject {
         ExpenseObject = Object
     }
     
-    func deleteNote(Objc: NSManagedObjectContext) {
-        Objc.delete(ExpenseObject)
+    func deleteRecord(obj: NSManagedObjectContext) {
+        obj.delete(ExpenseObject)
         do {
-            try Objc.save(); ClosePresent = true
+            try obj.save(); ClosePresent = true
         }
         catch {
-            Alert = "\(error)"; ShowAlertMessage = true
+            Alert = "Error when deleting record."; ShowAlertMessage = true
         }
     }
 }
