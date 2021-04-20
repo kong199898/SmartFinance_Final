@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Fht-Ea-xzg">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--SmartFinance-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6iG-by-sOR" userLabel="Outer Stack View">
+                                <rect key="frame" x="10" y="98" width="394" height="754"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P2X-Ht-1lC" userLabel="Stock Stack View">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="173.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhP-fF-LMJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="173.5"/>
+                                                <state key="normal" image="stockIcon"/>
+                                                <connections>
+                                                    <action selector="StockButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dNa-Ba-hQF"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="SSm-sb-fbD" userLabel="Stock Description Stack View">
+                                                <rect key="frame" x="202" y="0.0" width="192" height="173.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bk8-YV-mfM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="55" height="87"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                        <state key="normal" title="Stock">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="StockButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OZ8-mk-cDH"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="LZf-Wd-qez">
+                                                        <rect key="frame" x="0.0" y="87" width="192" height="86.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                        <state key="normal" title="Get stock information &amp; prediction of stock price">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="StockButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4er-Gj-onr"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.12941011790000001" green="0.12941065430000001" blue="0.12941181660000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Pda-sc-M8s" userLabel="Expense Stack View">
+                                        <rect key="frame" x="0.0" y="193.5" width="394" height="173.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SLI-FC-Agt">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="173.5"/>
+                                                <state key="normal" image="expenditureIcon"/>
+                                                <connections>
+                                                    <action selector="ExpenseButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P5v-Fv-Wvy"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="CA4-ZP-oeT" userLabel="Expense Description Stack View">
+                                                <rect key="frame" x="202" y="0.0" width="192" height="173.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FIA-Rt-lIj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="157" height="87"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                        <state key="normal" title="Expense Tracker">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="ExpenseButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UL1-ly-qye"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ssb-kU-pd2">
+                                                        <rect key="frame" x="0.0" y="87" width="173" height="86.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                        <state key="normal" title="Track your income &amp; expenses">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="ExpenseButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Htr-xN-7h3"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="lCr-AX-vi2" userLabel="Roi Stack View">
+                                        <rect key="frame" x="0.0" y="387" width="394" height="173.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EWo-1e-Dvh">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="173.5"/>
+                                                <state key="normal" image="roiIcon"/>
+                                                <connections>
+                                                    <action selector="RoiButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jwu-zc-mqI"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="yT4-kQ-Hnb" userLabel="Roi Description Stack View">
+                                                <rect key="frame" x="202" y="0.0" width="192" height="173.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="8y5-kO-JVR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="132" height="87"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                        <state key="normal" title="ROI Caculator">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="RoiButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="snp-No-oFd"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Ne4-2v-rvN">
+                                                        <rect key="frame" x="0.0" y="87" width="192" height="86.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                        <state key="normal" title="Evalulate profitability of your investment">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="RoiButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="73d-KE-09s"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1GN-4Y-bQP" userLabel="Retirement Stack View">
+                                        <rect key="frame" x="0.0" y="580.5" width="394" height="173.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cm-ty-AXD">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="173.5"/>
+                                                <state key="normal" image="retirementIcon"/>
+                                                <connections>
+                                                    <action selector="RetirementButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MLD-5G-8pG"/>
+                                                </connections>
+                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="vrx-tZ-a0g" userLabel="Retirement Description Stack View">
+                                                <rect key="frame" x="202" y="0.0" width="192" height="173.5"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="8y8-tv-4bt">
+                                                        <rect key="frame" x="0.0" y="0.0" width="181" height="87"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                        <state key="normal" title="Retirement Planner">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="RetirementButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FVD-uf-EPm"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="2DN-8h-jTa">
+                                                        <rect key="frame" x="0.0" y="87" width="192" height="86.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                        <state key="normal" title="Simulate your retirement cash-flow scenarios">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="RetirementButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UPx-JA-oWZ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6iG-by-sOR" secondAttribute="bottom" constant="10" id="Ce6-Xo-PO3"/>
+                            <constraint firstItem="6iG-by-sOR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="ZkG-3v-hPo"/>
+                            <constraint firstItem="6iG-by-sOR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="bic-Bf-dFq"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6iG-by-sOR" secondAttribute="trailing" constant="10" id="iVD-jd-mPB"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="SmartFinance" id="iUd-uu-fuL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="80.357142857142847"/>
+        </scene>
+        <!--Stock Info-->
+        <scene sceneID="qDO-x0-d6h">
+            <objects>
+                <viewController storyboardIdentifier="StockVC" id="OmB-DH-4bs" customClass="StockViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bNs-T6-DzW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="wgY-Gt-alM"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Info" id="lgm-Vq-sxf"/>
+                    <navigationItem key="navigationItem" title="Stock Info" id="lCG-pK-ClP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ww3-Ow-l9I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2535" y="-579"/>
+        </scene>
+        <!--Stock Description-->
+        <scene sceneID="lVH-bS-BZp">
+            <objects>
+                <viewController storyboardIdentifier="DescriptionVC" id="04V-MO-IGe" userLabel="Stock Description" customClass="StockDescriptionViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BAi-wT-wTC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="clu-lj-TfU"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Description" id="Cjw-y2-nuc"/>
+                    <navigationItem key="navigationItem" title="Stock Description" id="MgI-nT-pf7"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E0C-a3-2Fb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3261" y="-579"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hRX-CP-jXs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Fht-Ea-xzg" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T0r-ai-pFD">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Sh0-wT-SAr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v0P-xR-Tdm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-183" y="80"/>
+        </scene>
+        <!--Expense-->
+        <scene sceneID="e5R-MM-JAb">
+            <objects>
+                <viewController storyboardIdentifier="ExpenseVC" id="VEO-KZ-Ghm" userLabel="Expense" customClass="ExpenseViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DC5-Bi-lWF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="HX6-T4-RIq"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Expense" id="JHM-GB-M31" userLabel="Expense"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YNM-jH-CVZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="80"/>
+        </scene>
+        <!--ROI-->
+        <scene sceneID="HLM-zM-1rN">
+            <objects>
+                <viewController storyboardIdentifier="RoiVC" id="jHz-Fb-iPF" userLabel="ROI" customClass="RoiViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3yC-RZ-spV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="5KW-XE-Oez"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="ROI" id="7NA-ms-41R" userLabel="ROI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="elk-L3-Cb9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="785"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="C8d-rp-gjB">
+            <objects>
+                <viewController storyboardIdentifier="ProfileVC" id="MfE-4r-fBy" customClass="ProfileViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pPp-dE-okP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="xX1-HX-Tsm"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oCZ-HX-PDz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="2263"/>
+        </scene>
+        <!--Edit Profile Form View Controller-->
+        <scene sceneID="KXi-UE-poo">
+            <objects>
+                <viewController storyboardIdentifier="EditProfileVC" id="2lK-BH-XnW" customClass="EditProfileFormViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YOK-tu-4Kh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ffR-al-u5Y"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GUa-uV-kxa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="2986"/>
+        </scene>
+        <!--Edit Assumption Form View Controller-->
+        <scene sceneID="S4G-x8-F7h">
+            <objects>
+                <viewController storyboardIdentifier="EditAssumptionVC" id="b4K-ze-XSE" customClass="EditAssumptionFormViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SpY-f6-CZ7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="8e3-cR-lqQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j4z-OK-LKE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2535" y="2986"/>
+        </scene>
+        <!--Edit Income Event View Controller-->
+        <scene sceneID="yHa-7o-RvN">
+            <objects>
+                <viewController storyboardIdentifier="EditIncomeEventVC" id="X7f-rF-JBA" customClass="EditIncomeEventViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zz1-Px-N5V">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="voh-OE-mcZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9oK-5f-VUC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3338" y="2986"/>
+        </scene>
+        <!--Edit Spending Goal View Controller-->
+        <scene sceneID="PZG-iv-5uk">
+            <objects>
+                <viewController storyboardIdentifier="EditSpendingGoalVC" id="ZNu-N1-gue" customClass="EditSpendingGoalViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2t4-Ek-Q8T">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="zrp-ha-EDB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gWe-IH-Nav" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4158" y="2986"/>
+        </scene>
+        <!--Retirement-->
+        <scene sceneID="lx7-Lf-Ecm">
+            <objects>
+                <viewController storyboardIdentifier="RetirementVC" id="Vee-wA-4tc" userLabel="Retirement" customClass="RetirementViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DkF-eH-rtA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Elq-3K-Axf"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Retirement Planner" id="wAs-C1-zF8" userLabel="Retirement"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1SL-V2-4Ot" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="1519"/>
+        </scene>
+        <!--Stock Price Prediction-->
+        <scene sceneID="JZ2-Vf-ufK">
+            <objects>
+                <viewController storyboardIdentifier="PredictionVC" id="qJY-Fb-6H8" customClass="PredictionViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Exr-Xu-tuI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="YSc-xI-bIv"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Stock Price Prediction" id="S9i-wf-oou"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nzz-YR-lSd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1783" y="-579"/>
+        </scene>
+        <!--Create Retirement Form View Controller-->
+        <scene sceneID="QZB-gj-27b">
+            <objects>
+                <viewController storyboardIdentifier="RetirementFormVC" id="QgA-VI-lS7" customClass="CreateRetirementFormViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WYf-94-qVK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="M53-bh-e9e"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="76j-mK-6HM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2534.7826086956525" y="1518.75"/>
+        </scene>
+        <!--Add Profile Form View Controller-->
+        <scene sceneID="1Ph-so-UWE">
+            <objects>
+                <viewController storyboardIdentifier="AddProfileVC" id="6qb-Vo-NIw" customClass="AddProfileFormViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WgJ-wk-OXM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="mHE-Ub-FUH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QZe-BN-n81" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3339" y="1519"/>
+        </scene>
+        <!--Add Assumptions View Controller-->
+        <scene sceneID="oGr-SK-Thr">
+            <objects>
+                <viewController storyboardIdentifier="AddAssumptionsVC" id="iZG-cp-kiX" customClass="AddAssumptionsViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DvG-8n-wys">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Cb1-J8-nzb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2aZ-tj-Drv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4159" y="1519"/>
+        </scene>
+        <!--Add Income Event View Controller-->
+        <scene sceneID="cAY-2D-jE9">
+            <objects>
+                <viewController storyboardIdentifier="AddIncomeEventVC" id="Lho-Sx-43i" customClass="AddIncomeEventViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xXw-tf-PKX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="AU1-wL-ci1"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EHp-bu-7Sh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4959" y="1519"/>
+        </scene>
+        <!--Add Spending Goals View Controller-->
+        <scene sceneID="Zdw-ec-eYT">
+            <objects>
+                <viewController storyboardIdentifier="AddSpendingGoalsVC" id="MEn-uS-zsj" customClass="AddSpendingGoalsViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lht-uX-qG2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="DEZ-5t-FnM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BfN-hK-A9h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5697" y="1519"/>
+        </scene>
+        <!--Details Table View Controller-->
+        <scene sceneID="Xmx-d8-b5M">
+            <objects>
+                <tableViewController storyboardIdentifier="DetailsVC" id="AzX-5x-SMx" customClass="DetailsTableViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="qcU-YW-GT2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RetirementCell" id="8ui-Jf-R14" customClass="DetailsTableViewCell" customModule="SmartFinance" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8ui-Jf-R14" id="UxX-uS-zjm">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="c89-FB-bek">
+                                            <rect key="frame" x="5" y="11.5" width="404" height="20.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kaz-oY-q06">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0t-dB-bxn">
+                                                    <rect key="frame" x="81" y="0.0" width="80" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GXy-Xi-sh9">
+                                                    <rect key="frame" x="162" y="0.0" width="80" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4R4-EE-Ien">
+                                                    <rect key="frame" x="243" y="0.0" width="80" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PWZ-uS-SWc">
+                                                    <rect key="frame" x="324" y="0.0" width="80" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="c89-FB-bek" firstAttribute="leading" secondItem="UxX-uS-zjm" secondAttribute="leading" constant="5" id="SvD-eM-wM7"/>
+                                        <constraint firstItem="c89-FB-bek" firstAttribute="centerY" secondItem="UxX-uS-zjm" secondAttribute="centerY" id="VGi-sV-zRh"/>
+                                        <constraint firstAttribute="trailing" secondItem="c89-FB-bek" secondAttribute="trailing" constant="5" id="jgU-kT-MSh"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="age" destination="Kaz-oY-q06" id="YHR-sq-Wx6"/>
+                                    <outlet property="cashflow" destination="PWZ-uS-SWc" id="BYA-yP-lcr"/>
+                                    <outlet property="income" destination="GXy-Xi-sh9" id="dQh-My-GAt"/>
+                                    <outlet property="portfolio" destination="T0t-dB-bxn" id="8s9-MA-iPM"/>
+                                    <outlet property="spending" destination="4R4-EE-Ien" id="vRe-v3-4sw"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="AzX-5x-SMx" id="Pdk-bx-q51"/>
+                            <outlet property="delegate" destination="AzX-5x-SMx" id="ZVv-P2-wHM"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K2X-HT-ACe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6455" y="1519"/>
+        </scene>
+        <!--Assumption View Controller-->
+        <scene sceneID="ggj-ob-RHn">
+            <objects>
+                <viewController storyboardIdentifier="AssumptionVC" id="lPZ-h4-edZ" customClass="AssumptionViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7bw-0N-lSx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="8Rh-xE-3Be"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBL-1E-F5Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2535" y="2263"/>
+        </scene>
+        <!--Income Event View Controller-->
+        <scene sceneID="AQL-WY-vli">
+            <objects>
+                <viewController storyboardIdentifier="IncomeEventVC" id="DfD-cS-wHc" customClass="IncomeEventViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eiO-EK-46r">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="rNw-5k-3N6"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lau-az-8k2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3338" y="2263"/>
+        </scene>
+        <!--Spending Goal View Controller-->
+        <scene sceneID="u0C-Ty-jpt">
+            <objects>
+                <viewController storyboardIdentifier="SpendingGoalVC" id="ti5-Zy-WWb" customClass="SpendingGoalViewController" customModule="SmartFinance" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="57d-BR-JgL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="UIp-HY-L7m"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T5V-4X-l4e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4158" y="2263"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="expenditureIcon" width="512" height="512"/>
+        <image name="retirementIcon" width="512" height="512"/>
+        <image name="roiIcon" width="512" height="512"/>
+        <image name="stockIcon" width="512" height="512"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
