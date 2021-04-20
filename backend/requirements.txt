@@ -1,0 +1,12 @@
+gunicorn
+Flask
+flask-restful
+yfinance
+fbprophet
+Prophet
+imageio
+matplotlib
+jsonschema
+requests
+bs4
+BeautifulSoup4
